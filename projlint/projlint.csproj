@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
+    <Version>1.0.0-master</Version>
+    <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\readme.md" Link="readme.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\MacroConsole\MacroConsole\MacroConsole.csproj" />
+    <ProjectReference Include="..\..\MacroExceptions\MacroExceptions\MacroExceptions.csproj" />
+    <ProjectReference Include="..\..\MacroGit\MacroGit\MacroGit.csproj" />
+    <ProjectReference Include="..\..\MacroIO\MacroIO\MacroIO.csproj" />
+    <ProjectReference Include="..\..\MacroSln\MacroSln\MacroSln.csproj" />
+  </ItemGroup>
+
+</Project>
