@@ -6,41 +6,37 @@ using System.Reflection;
 using MacroConsole;
 using MacroExceptions;
 using MacroIO;
-using projlint.Contexts;
+using ProjLint.Contexts;
 
-namespace
-projlint.Commands
+namespace ProjLint.Commands
 {
-
-public static class
-HelpCommand
-{
-
-
-public static int
-Help(RepositoryContext context, Queue<string> args)
-{
-    Trace.TraceInformation("");
-
-    using (var reader = new StreamReader(
-        Assembly.GetCallingAssembly().GetManifestResourceStream("projlint.readme.md")))
+    public static class HelpCommand
     {
-        foreach (
-            var line
-            in ReadmeFilter.SelectSections(
-                reader.ReadAllLines(),
-                "Synopsis",
-                "Commands"))
+
+        public static int Help(RepositoryContext context, Queue<string> args)
         {
-            Trace.TraceInformation(line);
+            Trace.TraceInformation("");
+
+            using (
+                var reader =
+                    new StreamReader(Assembly.GetCallingAssembly().GetManifestResourceStream("projlint.readme.md"))
+            )
+            {
+                foreach (
+                    var line
+                    in ReadmeFilter.SelectSections(
+                        reader.ReadAllLines(),
+                        "Synopsis",
+                        "Commands"))
+                {
+                    Trace.TraceInformation(line);
+                }
+            }
+
+            if (args.Any()) throw new UserException("Too many arguments");
+
+            return 0;
         }
+
     }
-
-    if (args.Any()) throw new UserException("Too many arguments");
-
-    return 0;
-}
-
-
-}
 }

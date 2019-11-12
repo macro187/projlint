@@ -1,49 +1,41 @@
 ﻿using System.Collections.Generic;
-using projlint.Aspects;
-using projlint.Contexts;
+using ProjLint.Aspects;
+using ProjLint.Contexts;
 
-namespace
-projlint.Commands
+namespace ProjLint.Commands
 {
-
-public static class
-ApplyCommand
-{
-
-
-public static int
-Apply(RepositoryContext repository, Queue<string> args)
-{
-    ApplyRepositoryAspects(repository);
-    ApplyProjectAspects(repository);
-    return 0;
-}
-
-
-static void
-ApplyRepositoryAspects(RepositoryContext repository)
-{
-    foreach (var type in Aspect.AllRepositoryAspects)
+    public static class ApplyCommand
     {
-        var aspect = RepositoryAspect.Create(type, repository);
-        aspect.Apply();
-    }
-}
 
-
-static void
-ApplyProjectAspects(RepositoryContext repository)
-{
-    foreach (var project in repository.FindProjects())
-    {
-        foreach (var type in Aspect.AllProjectAspects)
+        public static int Apply(RepositoryContext repository, Queue<string> args)
         {
-            var aspect = ProjectAspect.Create(type, project);
-            aspect.Apply();
+            ApplyRepositoryAspects(repository);
+            ApplyProjectAspects(repository);
+            return 0;
         }
+
+
+        static void ApplyRepositoryAspects(RepositoryContext repository)
+        {
+            foreach (var type in Aspect.AllRepositoryAspects)
+            {
+                var aspect = RepositoryAspect.Create(type, repository);
+                aspect.Apply();
+            }
+        }
+
+
+        static void ApplyProjectAspects(RepositoryContext repository)
+        {
+            foreach (var project in repository.FindProjects())
+            {
+                foreach (var type in Aspect.AllProjectAspects)
+                {
+                    var aspect = ProjectAspect.Create(type, project);
+                    aspect.Apply();
+                }
+            }
+        }
+
     }
-}
-
-
-}
 }
