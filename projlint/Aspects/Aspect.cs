@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using MacroDiagnostics;
 
 namespace ProjLint.Aspects
@@ -9,10 +10,10 @@ namespace ProjLint.Aspects
     {
 
         public static IReadOnlyCollection<Type> AllAspects { get; } =
-            new Type[] {
-                typeof(SlnFileAspect),
-                typeof(CSProjFileAspect),
-            };
+            Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t => typeof(Aspect).IsAssignableFrom(t))
+                .Where(t => !t.IsAbstract)
+                .ToArray();
 
 
         public static IReadOnlyCollection<Type> AllRepositoryAspects { get; } =
