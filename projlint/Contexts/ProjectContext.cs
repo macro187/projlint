@@ -9,39 +9,39 @@ namespace ProjLint.Contexts
     public class ProjectContext
     {
 
-        public ProjectContext(GitRepository repository, string subdirectory)
+        public ProjectContext(GitRepository repository, string name)
         {
             Guard.NotNull(repository, nameof(repository));
-            Guard.NotNull(subdirectory, nameof(subdirectory));
-            Guard.NotWhiteSpaceOnly(subdirectory, nameof(subdirectory));
+            Guard.NotNull(name, nameof(name));
+            Guard.NotWhiteSpaceOnly(name, nameof(name));
 
             Repository = repository;
-            Subdirectory = subdirectory;
-            Path = IOPath.Combine(Repository.Path, subdirectory);
+            Name = name;
+            Path = IOPath.Combine(Repository.Path, name);
 
             if (!Directory.Exists(Path))
             {
-                throw new ArgumentException($"Subdirectory {subdirectory} does not exist", nameof(subdirectory));
+                throw new ArgumentException($"Subdirectory {name} does not exist", nameof(name));
             }
         }
 
 
         /// <summary>
-        /// The Git repository
+        /// The Git repository containing this project
         /// </summary>
         ///
         public GitRepository Repository { get; }
 
 
         /// <summary>
-        /// The name of the project subdirectory
+        /// The name of the project directory
         /// </summary>
         ///
-        public string Subdirectory { get; }
+        public string Name { get; }
 
 
         /// <summary>
-        /// The absolute normalized path to the project subdirectory
+        /// The absolute path to the project directory
         /// </summary>
         ///
         public string Path { get; }

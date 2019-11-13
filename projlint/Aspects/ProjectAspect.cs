@@ -7,7 +7,7 @@ namespace ProjLint.Aspects
     public abstract class ProjectAspect : Aspect<ProjectContext>
     {
 
-        public static ProjectAspect Create(Type type, ProjectContext context)
+        public new static ProjectAspect Create(Type type, ProjectContext context)
         {
             return Create<ProjectAspect>(type, context);
         }
@@ -21,13 +21,13 @@ namespace ProjLint.Aspects
 
         protected override IDisposable OnAnalysing()
         {
-            return LogicalOperation.Start($"Analysing {Context.Subdirectory} {Name}");
+            return LogicalOperation.Start($"Analysing {Context.Name} {Name}");
         }
 
 
         protected override IDisposable OnApplying()
         {
-            return LogicalOperation.Start($"Applying {Context.Subdirectory} {Name}");
+            return LogicalOperation.Start($"Applying {Context.Name} {Name}");
         }
 
     }

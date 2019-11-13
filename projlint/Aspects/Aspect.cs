@@ -31,15 +31,15 @@ namespace ProjLint.Aspects
         protected Aspect()
         {
             Name =
-#if (NET461)
+                #if (NET461)
                     GetType().Name
                         .Replace(GetType().BaseType.Name, "")
                         .Replace(nameof(Aspect), "");
-#else
+                #else
                     GetType().Name
                         .Replace(GetType().BaseType.Name, "", StringComparison.Ordinal)
                         .Replace(nameof(Aspect), "", StringComparison.Ordinal);
-#endif
+                #endif
         }
 
 
@@ -47,11 +47,11 @@ namespace ProjLint.Aspects
 
 
         /// <summary>
-        /// Analyse this aspect of the repository or project
+        /// Analyse this aspect of the context
         /// </summary>
         ///
         /// <returns>
-        /// Whether this aspect is already correctly applied
+        /// Whether this aspect of the context is correct
         /// </returns>
         ///
         public bool Analyse()
@@ -64,15 +64,18 @@ namespace ProjLint.Aspects
 
 
         /// <summary>
-        /// Based on analysis, apply this aspect where necessary
+        /// Apply this aspect to the context
         /// </summary>
         ///
-        public void Apply()
+        /// <returns>
+        /// Whether the aspect was successfully applied
+        /// </returns>
+        ///
+        public bool Apply()
         {
-            Analyse();
             using (OnApplying())
             {
-                OnApply();
+                return OnApply();
             }
         }
 
@@ -92,7 +95,10 @@ namespace ProjLint.Aspects
         protected abstract bool OnAnalyse();
 
 
-        protected abstract void OnApply();
+        protected virtual bool OnApply()
+        {
+            return false;
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using IOPath = System.IO.Path;
 using System.Linq;
 using MacroGit;
 using MacroGuards;
@@ -13,6 +14,8 @@ namespace ProjLint.Contexts
         {
             Guard.NotNull(repository, nameof(repository));
             Repository = repository;
+            Name = repository.Name;
+            Path = repository.Path;
         }
 
 
@@ -24,29 +27,33 @@ namespace ProjLint.Contexts
 
 
         /// <summary>
+        /// The name of the repository directory
+        /// </summary>
+        ///
+        public string Name { get; }
+
+
+        /// <summary>
+        /// The absolute path to the repository directory
+        /// </summary>
+        ///
+        public string Path { get; }
+
+
+        /// <summary>
         /// Find subdirectories that look like projects
         /// </summary>
         ///
         public IEnumerable<ProjectContext> FindProjects() =>
-            Directory.EnumerateDirectories(Repository.Path, "*", SearchOption.TopDirectoryOnly)
-                .Where(subdirectoryPath => LooksLikeProject(subdirectoryPath))
-                .Select(subdirectoryPath => Path.GetFileName(subdirectoryPath))
-                .Select(subdirectoryName => new ProjectContext(Repository, subdirectoryName));
+            Directory.EnumerateDirectories(Path, "*", SearchOption.TopDirectoryOnly)
+                .Where(path => LooksLikeProject(path))
+                .Select(path => IOPath.GetFileName(path))
+                .Select(name => new ProjectContext(Repository, name));
 
 
         bool LooksLikeProject(string path)
         {
-            if (Directory.EnumerateFiles(path, "*.csproj", SearchOption.TopDirectoryOnly).Any())
-            {
-                return true;
-            }
-
-            if (Directory.EnumerateFiles(path, "*.cs", SearchOption.AllDirectories).Any())
-            {
-                return true;
-            }
-
-            return false;
+            return Directory.EnumerateFiles(path, "*.csproj", SearchOption.TopDirectoryOnly).Any();
         }
 
     }
