@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using MacroDiagnostics;
@@ -57,7 +58,12 @@ namespace ProjLint.Aspects
         {
             using (OnAnalysing())
             {
-                return OnAnalyse();
+                var result = OnAnalyse();
+                if (!result)
+                {
+                    Trace.TraceError("Fail");
+                }
+                return result;
             }
         }
 
@@ -74,7 +80,12 @@ namespace ProjLint.Aspects
         {
             using (OnApplying())
             {
-                return OnApply();
+                var result = OnApply();
+                if (!result)
+                {
+                    Trace.TraceError("Failed");
+                }
+                return result;
             }
         }
 
