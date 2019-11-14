@@ -20,7 +20,7 @@ namespace ProjLint.Aspects
         public Correct_Sln_Filename(RepositoryContext context)
             : base(context)
         {
-            Require<A_Single_Sln_File>();
+            Require<Single_Sln_File>();
             correctSlnName = GetCorrectSlnName(context);
         }
 

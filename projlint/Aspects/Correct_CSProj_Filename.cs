@@ -20,7 +20,7 @@ namespace ProjLint.Aspects
         public Correct_CSProj_Filename(ProjectContext context)
             : base(context)
         {
-            Require<A_Single_CSProj_File>();
+            Require<Single_CSProj_File>();
             correctCsprojName = GetCorrectCSProjName(context);
         }
 

@@ -3,10 +3,10 @@ using ProjLint.Contexts;
 
 namespace ProjLint.Aspects
 {
-    public class A_GitIgnore_File : RepositoryAspect
+    public class GitIgnore_File : RepositoryAspect
     {
 
-        public A_GitIgnore_File(RepositoryContext context)
+        public GitIgnore_File(RepositoryContext context)
             : base(context)
         {
             gitIgnorePath = Path.Combine(Context.Path, ".gitignore");
