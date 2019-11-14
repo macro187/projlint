@@ -7,7 +7,7 @@ using ProjLint.Contexts;
 
 namespace ProjLint.Aspects
 {
-    public class CSProjNameAspect : ProjectAspect
+    public class CSProjNameCorrectAspect : ProjectAspect
     {
 
         public static string GetCorrectCSProjName(ProjectContext context)
@@ -17,10 +17,10 @@ namespace ProjLint.Aspects
         }
 
 
-        public CSProjNameAspect(ProjectContext context)
+        public CSProjNameCorrectAspect(ProjectContext context)
             : base(context)
         {
-            Require<SingleCSProjAspect>();
+            Require<SingleCSProjPresentAspect>();
             correctCsprojName = GetCorrectCSProjName(context);
         }
 
