@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using MacroGit;
 using MacroGuards;
 using IOPath = System.IO.Path;
 
@@ -9,7 +8,7 @@ namespace ProjLint.Contexts
     public class ProjectContext
     {
 
-        public ProjectContext(GitRepository repository, string name)
+        public ProjectContext(RepositoryContext repository, string name)
         {
             Guard.NotNull(repository, nameof(repository));
             Guard.NotNull(name, nameof(name));
@@ -27,10 +26,10 @@ namespace ProjLint.Contexts
 
 
         /// <summary>
-        /// The Git repository containing this project
+        /// The repository containing this project
         /// </summary>
         ///
-        public GitRepository Repository { get; }
+        public RepositoryContext Repository { get; }
 
 
         /// <summary>

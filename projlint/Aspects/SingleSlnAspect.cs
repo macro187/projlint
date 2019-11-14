@@ -24,7 +24,7 @@ namespace ProjLint.Aspects
         protected override bool OnAnalyse()
         {
             slnNames =
-                Directory.EnumerateFiles(Context.Path, "*.sln", SearchOption.TopDirectoryOnly)
+                Context.EnumerateFiles(Context.Path, "*.sln")
                     .Select(path => Path.GetFileName(path))
                     .ToList();
 

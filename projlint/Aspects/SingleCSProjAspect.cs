@@ -27,7 +27,7 @@ namespace ProjLint.Aspects
         protected override bool OnAnalyse()
         {
             csprojs =
-                Directory.EnumerateFiles(Context.Path, "*.csproj", SearchOption.TopDirectoryOnly)
+                Context.Repository.EnumerateFiles(Context.Path, "*.csproj")
                     .Select(path => Path.GetFileName(path))
                     .ToList();
 

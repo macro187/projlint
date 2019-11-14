@@ -32,7 +32,7 @@ namespace ProjLint.Aspects
         protected override bool OnAnalyse()
         {
             csprojName =
-                Directory.EnumerateFiles(Context.Path, "*.csproj", SearchOption.TopDirectoryOnly)
+                Context.Repository.EnumerateFiles(Context.Path, "*.csproj")
                     .Select(path => Path.GetFileName(path))
                     .Single();
 
