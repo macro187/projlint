@@ -6,14 +6,18 @@ namespace ProjLint.Aspects
     public class GitIgnore_File : RepositoryAspect
     {
 
+        public static string GetGitIgnorePath(RepositoryContext context) =>
+            Path.Combine(context.Path, ".gitignore");
+
+
         public GitIgnore_File(RepositoryContext context)
             : base(context)
         {
-            gitIgnorePath = Path.Combine(Context.Path, ".gitignore");
+            gitIgnorePath = GetGitIgnorePath(Context);
         }
 
 
-        string gitIgnorePath;
+        readonly string gitIgnorePath;
         bool isGitIgnorePresent;
 
 
@@ -27,7 +31,7 @@ namespace ProjLint.Aspects
         {
             if (!isGitIgnorePresent)
             {
-                using (File.Create(gitIgnorePath)) {}
+                using (File.Create(gitIgnorePath)) { }
             }
 
             return true;

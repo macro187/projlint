@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using IOPath = System.IO.Path;
 using System.Linq;
 using MacroGit;
 using MacroGuards;
+using IOPath = System.IO.Path;
 
 namespace ProjLint.Contexts
 {
