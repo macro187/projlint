@@ -5,38 +5,34 @@ using ProjLint.Contexts;
 
 namespace ProjLint.Aspects
 {
-    public class Dot_VS_In_GitIgnore : RepositoryAspect
+    public abstract class GitIgnoreAspect : RepositoryAspect
     {
 
-        const string GitIgnoreDotVs = "/.vs";
-
-
-        public Dot_VS_In_GitIgnore(RepositoryContext context)
+        public GitIgnoreAspect(RepositoryContext context, string gitIgnoreLine)
             : base(context)
         {
             Require<GitIgnore_File>();
+            this.gitIgnoreLine = gitIgnoreLine;
             gitIgnorePath = GitIgnore_File.GetGitIgnorePath(Context);
         }
 
 
+        readonly string gitIgnoreLine;
         readonly string gitIgnorePath;
-        bool isDotVsInGitIgnore;
+        bool isGitIgnored;
 
 
         protected override bool OnAnalyse()
         {
-            return
-                isDotVsInGitIgnore =
-                    File.ReadLines(gitIgnorePath)
-                        .Any(line => line.Trim() == GitIgnoreDotVs);
+            return isGitIgnored = File.ReadLines(gitIgnorePath).Any(line => line.Trim() == gitIgnoreLine);
         }
 
 
         protected override bool OnApply()
         {
-            if (!isDotVsInGitIgnore)
+            if (!isGitIgnored)
             {
-                FileExtensions.AppendLines(gitIgnorePath, GitIgnoreDotVs);
+                FileExtensions.AppendLines(gitIgnorePath, gitIgnoreLine);
             }
 
             return true;
