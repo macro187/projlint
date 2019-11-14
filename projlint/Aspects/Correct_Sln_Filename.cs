@@ -7,7 +7,7 @@ using ProjLint.Contexts;
 
 namespace ProjLint.Aspects
 {
-    public class SlnNameCorrectAspect : RepositoryAspect
+    public class Correct_Sln_Filename : RepositoryAspect
     {
 
         public static string GetCorrectSlnName(RepositoryContext context)
@@ -17,10 +17,10 @@ namespace ProjLint.Aspects
         }
 
 
-        public SlnNameCorrectAspect(RepositoryContext context)
+        public Correct_Sln_Filename(RepositoryContext context)
             : base(context)
         {
-            Require<SingleSlnPresentAspect>();
+            Require<A_Single_Sln_File>();
             correctSlnName = GetCorrectSlnName(context);
         }
 

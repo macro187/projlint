@@ -21,13 +21,13 @@ namespace ProjLint.Aspects
 
         protected override IDisposable OnAnalysing()
         {
-            return LogicalOperation.Start($"Analysing {Context.Name} {Name}");
+            return LogicalOperation.Start($"Checking for {Description} in {Context.Name}/");
         }
 
 
         protected override IDisposable OnApplying()
         {
-            return LogicalOperation.Start($"Applying {Context.Name} {Name}");
+            return LogicalOperation.Start($"Applying {Description} in {Context.Name}/");
         }
 
     }

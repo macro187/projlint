@@ -30,20 +30,19 @@ namespace ProjLint.Aspects
 
         protected Aspect()
         {
-            Name =
-                #if (NET461)
-                    GetType().Name
-                        .Replace(GetType().BaseType.Name, "")
-                        .Replace(nameof(Aspect), "");
-                #else
-                    GetType().Name
-                        .Replace(GetType().BaseType.Name, "", StringComparison.Ordinal)
-                        .Replace(nameof(Aspect), "", StringComparison.Ordinal);
-                #endif
+            Name = GetType().Name;
+            Description = Name
+                .Replace(nameof(Aspect), "")
+                .Replace("_", " ")
+                .ToLower()
+                .Trim();
         }
 
 
         public string Name { get; }
+
+
+        public string Description { get; }
 
 
         /// <summary>
@@ -82,13 +81,13 @@ namespace ProjLint.Aspects
 
         protected virtual IDisposable OnAnalysing()
         {
-            return LogicalOperation.Start($"Analysing {Name}");
+            return LogicalOperation.Start($"Checking for {Description}");
         }
 
 
         protected virtual IDisposable OnApplying()
         {
-            return LogicalOperation.Start($"Applying {Name}");
+            return LogicalOperation.Start($"Applying {Description}");
         }
 
 

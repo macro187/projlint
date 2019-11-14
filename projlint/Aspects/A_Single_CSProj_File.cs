@@ -8,13 +8,13 @@ using ProjLint.Contexts;
 
 namespace ProjLint.Aspects
 {
-    public class SingleCSProjPresentAspect : ProjectAspect
+    public class A_Single_CSProj_File : ProjectAspect
     {
 
-        public SingleCSProjPresentAspect(ProjectContext context)
+        public A_Single_CSProj_File(ProjectContext context)
             : base(context)
         {
-            correctCsprojName = CSProjNameCorrectAspect.GetCorrectCSProjName(context);
+            correctCsprojName = Correct_CSProj_Filename.GetCorrectCSProjName(context);
             correctCsprojPath = Path.Combine(context.Path, correctCsprojName);
         }
 
