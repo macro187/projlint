@@ -33,10 +33,14 @@ namespace ProjLint.Aspects
             if (!isLinePresent)
             {
                 FileExtensions.AppendLines(gitAttributesPath, gitAttributesLine);
+                OnApplied();
             }
 
             return true;
         }
+
+
+        protected virtual void OnApplied() { }
 
     }
 }
