@@ -11,7 +11,7 @@ namespace ProjLint.Aspects
         public Unset_Text_GitAttributes(RepositoryContext context)
             : base(context, "* -text")
         {
-            Require<Incorrect_Text_False_GitAttributes>();
+            Require<No_Incorrect_False_Text_GitAttributes>();
             SetPriority(100);
         }
 

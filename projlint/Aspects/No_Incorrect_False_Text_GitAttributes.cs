@@ -5,7 +5,7 @@ using ProjLint.Contexts;
 
 namespace ProjLint.Aspects
 {
-    public class Incorrect_Text_False_GitAttributes : RepositoryAspect
+    public class No_Incorrect_False_Text_GitAttributes : RepositoryAspect
     {
 
         /// <summary>
@@ -15,7 +15,7 @@ namespace ProjLint.Aspects
         const string IncorrectLine = "* text=false";
 
 
-        public Incorrect_Text_False_GitAttributes(RepositoryContext context)
+        public No_Incorrect_False_Text_GitAttributes(RepositoryContext context)
             : base(context)
         {
             Require<GitAttributes_File>();
