@@ -46,6 +46,9 @@ namespace ProjLint.Aspects
         public string Description { get; }
 
 
+        public int Priority { get; private set; }
+
+
         /// <summary>
         /// Analyse this aspect of the context
         /// </summary>
@@ -108,6 +111,12 @@ namespace ProjLint.Aspects
         protected virtual bool OnApply()
         {
             return false;
+        }
+
+
+        protected void SetPriority(int priority)
+        {
+            Priority = priority;
         }
 
     }

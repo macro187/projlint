@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using ProjLint.Aspects;
 using ProjLint.Contexts;
 
@@ -51,7 +52,9 @@ namespace ProjLint.Commands
             var results = new Dictionary<Type, bool?>();
             var result = true;
 
-            foreach (var aspect in allAspects)
+            var prioritisedAspects = allAspects.OrderByDescending(a => instances[a].Priority);
+
+            foreach (var aspect in prioritisedAspects)
             {
                 result &= Analyse(context, aspect, instances, results, tryApplying);
             }
