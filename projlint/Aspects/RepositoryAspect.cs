@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ProjLint.Contexts;
 
 namespace ProjLint.Aspects

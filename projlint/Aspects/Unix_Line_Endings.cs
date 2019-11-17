@@ -1,4 +1,4 @@
-﻿using MacroSystem;
+using MacroSystem;
 using ProjLint.Contexts;
 
 namespace ProjLint.Aspects
