@@ -52,7 +52,7 @@ namespace ProjLint.Contexts
 
 
         /// <summary>
-        /// Returns an enumerable collection of file names that match a search pattern in a specified path
+        /// List files in a directory whose names match a wildcard pattern
         /// </summary>
         ///
         /// <remarks>
@@ -65,7 +65,32 @@ namespace ProjLint.Contexts
 
 
         /// <summary>
-        /// Returns an enumerable collection of directory names that match a search pattern in a specified path
+        /// List files in a directory hierarchy whose names match a wildcard pattern
+        /// </summary>
+        ///
+        /// <remarks>
+        /// Ignores .git directories and .gitignore'd files and directories.
+        /// </remarks>
+        ///
+        public IEnumerable<string> EnumerateAllFiles(string path, string searchPattern)
+        {
+            foreach (var file in EnumerateFiles(path, searchPattern))
+            {
+                yield return file;
+            }
+
+            foreach (var directory in EnumerateDirectories(path, "*"))
+            {
+                foreach (var file in EnumerateAllFiles(directory, searchPattern))
+                {
+                    yield return file;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// List directories in a directory whose names match a wildcard pattern
         /// </summary>
         ///
         /// <remarks>
