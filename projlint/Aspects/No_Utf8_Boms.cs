@@ -22,6 +22,7 @@ namespace ProjLint.Aspects
         public No_Utf8_Boms(RepositoryContext context)
             : base(context)
         {
+            SetPriority(-101);
         }
 
 
