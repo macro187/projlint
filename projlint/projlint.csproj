@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\MacroConsole\MacroConsole\MacroConsole.csproj" />
+    <ProjectReference Include="..\..\MacroEditorConfig\MacroEditorConfig\MacroEditorConfig.csproj" />
     <ProjectReference Include="..\..\MacroExceptions\MacroExceptions\MacroExceptions.csproj" />
     <ProjectReference Include="..\..\MacroGit\MacroGit\MacroGit.csproj" />
     <ProjectReference Include="..\..\MacroIO\MacroIO\MacroIO.csproj" />
