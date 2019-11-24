@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using MacroSystem;
 using ProjLint.Contexts;
 
@@ -13,7 +14,7 @@ namespace ProjLint.Aspects
                 "Windows",
                 new[]
                 {
-                    ".sln",
+                    new Regex(@"\.sln$"),
                 })
         {
         }

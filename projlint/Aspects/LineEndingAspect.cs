@@ -1,8 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using MacroDiagnostics;
 using MacroGuards;
 using MacroIO;
 using MacroSystem;
@@ -17,22 +18,22 @@ namespace ProjLint.Aspects
             RepositoryContext context,
             LineEnding lineEnding,
             string lineEndingDescription,
-            IEnumerable<string> applicableFilenameExtensions
+            IEnumerable<Regex> applicableFilenames
         )
             : base(context)
         {
             Guard.NotNull(lineEnding, nameof(lineEnding));
-            Guard.NotNull(applicableFilenameExtensions, nameof(applicableFilenameExtensions));
+            Guard.NotNull(applicableFilenames, nameof(applicableFilenames));
             SetPriority(-100);
             this.lineEnding = lineEnding;
             this.lineEndingDescription = lineEndingDescription;
-            this.applicableFilenameExtensions = applicableFilenameExtensions;
+            this.applicableFilenames = applicableFilenames;
         }
 
 
         readonly LineEnding lineEnding;
         readonly string lineEndingDescription;
-        readonly IEnumerable<string> applicableFilenameExtensions;
+        readonly IEnumerable<Regex> applicableFilenames;
         readonly List<string> filesWithIncorrectLineEndings = new List<string>();
 
 
@@ -54,14 +55,14 @@ namespace ProjLint.Aspects
 
                 if (endings.Count > 1)
                 {
-                    Trace.TraceWarning($"Multiple line endings in {file}");
+                    Trace.TraceError($"Multiple line endings in {file}");
                     filesWithIncorrectLineEndings.Add(file);
                     continue;
                 }
 
                 if (endings.Single() != lineEnding)
                 {
-                    Trace.TraceWarning($"Incorrect line endings in {file}");
+                    Trace.TraceError($"Incorrect line endings in {file}");
                     filesWithIncorrectLineEndings.Add(file);
                     continue;
                 }
@@ -75,9 +76,11 @@ namespace ProjLint.Aspects
         {
             foreach (var file in filesWithIncorrectLineEndings)
             {
-                Trace.TraceInformation($"Applying {lineEndingDescription} line endings to {file}");
-                var lines = File.ReadAllLines(file);
-                FileExtensions.WriteAllLines(file, lines, lineEnding, false);
+                using (LogicalOperation.Start($"Applying {lineEndingDescription} line endings to {file}"))
+                {
+                    var lines = File.ReadAllLines(file);
+                    FileExtensions.WriteAllLines(file, lines, lineEnding, false);
+                }
             }
 
             return true;
@@ -86,7 +89,7 @@ namespace ProjLint.Aspects
 
         bool IsApplicable(string path)
         {
-            return applicableFilenameExtensions.Any(ext => path.EndsWith(ext, StringComparison.OrdinalIgnoreCase));
+            return applicableFilenames.Any(regex => regex.IsMatch(Path.GetFileName(path)));
         }
 
     }

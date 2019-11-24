@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using MacroSystem;
 using ProjLint.Contexts;
 
@@ -13,8 +14,14 @@ namespace ProjLint.Aspects
                 "Unix",
                 new[]
                 {
-                    ".csproj",
-                    ".cs",
+                    new Regex(@"\.csproj$"),
+                    new Regex(@"\.cs$"),
+                    new Regex(@"\.md$"),
+                    new Regex(@"^\.gitignore$"),
+                    new Regex(@"^\.gitattributes$"),
+                    new Regex(@"^\.editorconfig$"),
+                    new Regex(@"^\.nugit$"),
+                    new Regex(@"^\.produce$"),
                 })
         {
         }
