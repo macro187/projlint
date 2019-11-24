@@ -49,6 +49,12 @@ namespace ProjLint.Aspects
         public int Priority { get; private set; }
 
 
+        bool HasAnalysed { get; set; }
+
+
+        bool HasApplied { get; set; }
+
+
         /// <summary>
         /// Analyse this aspect of the context
         /// </summary>
@@ -59,6 +65,11 @@ namespace ProjLint.Aspects
         ///
         public bool Analyse()
         {
+            if (HasAnalysed)
+            {
+                throw new InvalidOperationException("Already Analyse()d");
+            }
+
             using (OnAnalysing())
             {
                 var result = OnAnalyse();
@@ -66,6 +77,7 @@ namespace ProjLint.Aspects
                 {
                     Trace.TraceError("Fail");
                 }
+                HasAnalysed = true;
                 return result;
             }
         }
@@ -81,6 +93,16 @@ namespace ProjLint.Aspects
         ///
         public bool Apply()
         {
+            if (!HasAnalysed)
+            {
+                throw new InvalidOperationException("Haven't Analyse()d yet");
+            }
+
+            if (HasApplied)
+            {
+                throw new InvalidOperationException("Already Apply()ed");
+            }
+
             using (OnApplying())
             {
                 var result = OnApply();
@@ -88,6 +110,7 @@ namespace ProjLint.Aspects
                 {
                     Trace.TraceError("Failed");
                 }
+                HasApplied = true;
                 return result;
             }
         }
