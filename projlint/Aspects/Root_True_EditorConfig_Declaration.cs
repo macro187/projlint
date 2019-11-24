@@ -6,10 +6,10 @@ using ProjLint.Contexts;
 
 namespace ProjLint.Aspects
 {
-    public class Root_True_Declaration_In_EditorConfig_Preamble : RepositoryAspect
+    public class Root_True_EditorConfig_Declaration : RepositoryAspect
     {
 
-        public Root_True_Declaration_In_EditorConfig_Preamble(RepositoryContext context)
+        public Root_True_EditorConfig_Declaration(RepositoryContext context)
             : base(context)
         {
             Require<EditorConfig_File>();
