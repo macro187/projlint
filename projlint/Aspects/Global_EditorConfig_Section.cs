@@ -4,6 +4,7 @@ using MacroEditorConfig;
 using MacroCollections;
 using MacroIO;
 using ProjLint.Contexts;
+using System.Collections.Generic;
 
 namespace ProjLint.Aspects
 {
@@ -37,15 +38,33 @@ namespace ProjLint.Aspects
                     .Select(s => s.Header)
                     .FirstOrDefault();
 
-            var lineToInsertAt =
-                firstSectionHeader?.LineNumber ??
-                editorConfigFile.Lines.Count + 1;
+            int lineToInsertAt;
+            bool insertBlankLineBefore;
+            if (firstSectionHeader != null)
+            {
+                lineToInsertAt = firstSectionHeader.LineNumber;
+                insertBlankLineBefore = false;
+            }
+            else
+            {
+                lineToInsertAt = editorConfigFile.Lines.Count + 1;
+                insertBlankLineBefore = true;
+            }
+
+            var linesToInsert =
+                new List<string>()
+                {
+                    "[*]",
+                    "",
+                };
+
+            if (insertBlankLineBefore)
+            {
+                linesToInsert.Insert(0, "");
+            }
 
             editorConfigFile.Edit(lines => {
-                lines.Insert(
-                    lineToInsertAt - 1,
-                    "[*]",
-                    "");
+                lines.InsertRange(lineToInsertAt - 1, linesToInsert);
             });
 
             FileExtensions.RewriteAllLines(editorConfigPath, editorConfigFile.Lines);
