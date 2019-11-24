@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using MacroIO;
+using MacroSystem;
 using ProjLint.Contexts;
 
 namespace ProjLint.Aspects
@@ -32,7 +33,7 @@ namespace ProjLint.Aspects
         {
             if (!isLinePresent)
             {
-                FileExtensions.AppendLines(gitAttributesPath, gitAttributesLine);
+                FileExtensions.AppendLines(gitAttributesPath, LineEnding.LF, false, gitAttributesLine);
                 OnApplied();
             }
 
