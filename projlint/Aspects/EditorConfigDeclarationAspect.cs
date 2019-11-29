@@ -49,7 +49,7 @@ namespace ProjLint.Aspects
 
             var isBlankLineRequired =
                 insertIndex < editorConfigFile.EditorConfigLines.Count - 1 &&
-                !(editorConfigFile.EditorConfigLines[insertIndex + 1] is EditorConfigBlankLine);
+                !(editorConfigFile.EditorConfigLines[insertIndex] is EditorConfigBlankLine);
 
             var linesToInsert = new List<string>();
 
