@@ -52,7 +52,7 @@ namespace ProjLint.Aspects
                 lines.Insert(lineToInsertAt - 1, "root = true");
             });
 
-            FileExtensions.RewriteAllLines(editorConfigPath, editorConfigFile.Lines);
+            FileExtensions.RewriteAllLines(editorConfigPath, editorConfigFile.LinesOfText);
 
             return true;
         }

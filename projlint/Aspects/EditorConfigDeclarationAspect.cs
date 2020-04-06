@@ -48,8 +48,8 @@ namespace ProjLint.Aspects
                     .LastOrDefault();
 
             var isBlankLineRequired =
-                insertIndex < editorConfigFile.EditorConfigLines.Count - 1 &&
-                !(editorConfigFile.EditorConfigLines[insertIndex] is EditorConfigBlankLine);
+                insertIndex < editorConfigFile.Lines.Count - 1 &&
+                !(editorConfigFile.Lines[insertIndex] is EditorConfigBlankLine);
 
             var linesToInsert = new List<string>();
 
@@ -64,7 +64,7 @@ namespace ProjLint.Aspects
                 lines.InsertRange(insertIndex, linesToInsert);
             });
 
-            FileExtensions.RewriteAllLines(editorConfigPath, editorConfigFile.Lines);
+            FileExtensions.RewriteAllLines(editorConfigPath, editorConfigFile.LinesOfText);
 
             return true;
         }
